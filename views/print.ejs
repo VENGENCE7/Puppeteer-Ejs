@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StickMan technologies</title>
+    <style>
+      table.GeneratedTable {
+        width: 100%;
+        background-color: #ffffff;
+        border-collapse: collapse;
+        border-width: 2px;
+        border-color: #ffcc00;
+        border-style: solid;
+        color: #000000;
+      }
+
+      table.GeneratedTable td,
+      table.GeneratedTable th {
+        border-width: 2px;
+        border-color: #ffcc00;
+        border-style: solid;
+        padding: 3px;
+      }
+
+      table.GeneratedTable thead {
+        background-color: #ffcc00;
+      }
+
+      h1 {
+        font-weight: bold;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>STICKMAN TECHNOLOGIES</h1>
+    <table class="GeneratedTable">
+      <thead>
+        <tr>
+          <th>Headings</th>
+          <th>User-Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Index</td>
+          <td><%=data%></td>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td><%=user.name%></td>
+        </tr>
+        <tr>
+          <td>Phone Number</td>
+          <td><%=user.phno%></td>
+        </tr>
+        <tr>
+          <td>Token Number</td>
+          <td><%=user.token_no%></td>
+        </tr>
+        <tr>
+          <td>Date Created</td>
+          <td><%=user.date%></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

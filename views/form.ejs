@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Input Form</title>
+    <style type="text/css">
+      body {
+        background-color: #d8d8d8;
+        color: #444;
+      }
+      h1 {
+        font-weight: bold;
+        text-align: center;
+      }
+      h3 {
+        font-weight: bold;
+        text-align: center;
+        color: orange;
+      }
+      h4 {
+        font-weight: bold;
+        text-align: center;
+        color: purple;
+      }
+      nav {
+        text-align: center;
+        font-size: 150%;
+        width: fit-content;
+        margin-left: 35%;
+        padding: 1%;
+        border: 0.1em solid #444;
+      }
+      p {
+        margin-bottom: 20px;
+        margin-left: 20px;
+      }
+      a:link {
+        color: #ff0000;
+      } /* unvisited link */
+      a:visited {
+        color: #0b614b;
+      } /* visited link */
+      a:hover {
+        color: #b4045f;
+      } /* mouse over link */
+      a:active {
+        color: #0000ff;
+      }
+      .form {
+        text-align: start;
+        margin-left: 40%;
+        font-size: 150%;
+      }
+
+      .result {
+        text-align: center;
+        border: 0.1em solid #444;
+      }
+
+      button {
+        font-size: 150%;
+        padding: 1%;
+        border-radius: 0.5em;
+      }
+      ul {
+        list-style-type: none;
+        margin-left: 30%;
+        text-align: left;
+      }
+      li {
+        color: blueviolet;
+      }
+    </style>
+    <%- include ("./include/message.ejs") %>
+  </head>
+  <body>
+    <form class="form" name="form1" method="POST" action="/user/add">
+      <table>
+        <tr>
+          <td>Name</td>
+          <td><input type="text" name="name" placeholder="Enter name" /></td>
+        </tr>
+        <tr>
+          <td>Phone Number</td>
+          <td>
+            <input type="text" name="phno" placeholder="Enter phone number" />
+          </td>
+        </tr>
+        <tr></tr>
+      </table>
+      <br />
+      <button type="submit" value="AddUser">Submit</button>
+    </form>
+
+    <br />
+    <br />
+    <% if (locals.result) { %>
+    <div class="result">
+      <h3>Added DATA:</h3>
+      <ul>
+        <li>Name : <%= result.name%></li>
+        <li>Phone Number : <%= result.phno%></li>
+        <li>Token : <%= result.token_no%></li>
+        <li>Date added : <%= result.date%></li>
+      </ul>
+    </div>
+    <% } %>
+  </body>
+</html>

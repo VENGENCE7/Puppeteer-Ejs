@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User-Data</title>
+    <style type="text/css">
+      body {
+        background-color: #d8d8d8;
+        color: #444;
+      }
+      h1 {
+        font-weight: bold;
+        text-align: center;
+      }
+      h3 {
+        font-weight: bold;
+        text-align: center;
+        color: orange;
+      }
+      h4 {
+        font-weight: bold;
+        text-align: center;
+        color: purple;
+      }
+      nav {
+        text-align: center;
+        font-size: 150%;
+        width: fit-content;
+        margin-left: 35%;
+        padding: 1%;
+        border: 0.1em solid #444;
+      }
+      p {
+        margin-bottom: 20px;
+        margin-left: 20px;
+      }
+      a:link {
+        color: #ff0000;
+      } /* unvisited link */
+      a:visited {
+        color: #0b614b;
+      } /* visited link */
+      a:hover {
+        color: #b4045f;
+      } /* mouse over link */
+      a:active {
+        color: #0000ff;
+      }
+      label {
+        display: flex;
+        align-items: center;
+      }
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        text-align: right;
+      }
+      li {
+        display: inline;
+      }
+      button {
+        font-size: 120%;
+        padding: 1%;
+        border-radius: 0.5em;
+      }
+      .date-form {
+        text-align: start;
+        margin-left: 40%;
+        font-size: 140%;
+      }
+
+      #myButton {
+        margin-left: 47%;
+        font-size: 90%;
+        padding: 0.5%;
+        border-radius: 0.5em;
+      }
+      #print {
+        margin-top: 2em;
+        margin-bottom: 2em;
+        margin-left: 46.5%;
+        font-size: 80%;
+        font-weight: 700;
+        padding: 0.5%;
+        color: cadetblue;
+        border-radius: 0.5em;
+      }
+      table {
+        border: 0.2em solid black;
+        margin-left: 25%;
+        text-align: center;
+        width: 50%;
+        border-collapse: collapse;
+      }
+      th {
+        border: 0.1em solid black;
+      }
+      td {
+        border-right: 0.1em solid gray;
+      }
+    </style>
+    <%- include ("./include/message.ejs") %>
+  </head>
+  <body>
+    <%- include ("./include/dateform.ejs") %>
+    <h1>ALL USER DATA</h1>
+
+    <a href="/user/all">
+      <button id="myButton">Show-All</button>
+    </a>
+
+    <br />
+    <br />
+    <% if (locals.data) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Index</th>
+          <th>Name</th>
+          <th>PH NO</th>
+          <th>Token</th>
+          <th>Date Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% data.forEach(function(obj,ind){ %>
+        <tr>
+          <td><%=(ind+1)%></td>
+          <td><%=obj.name%></td>
+          <td><%=obj.phno%></td>
+          <td><%=obj.token_no%></td>
+          <td><%=obj.date%></td>
+        </tr>
+        <%})%>
+      </tbody>
+    </table>
+    <% } %>
+    <a href="/user/pdf">
+      <button type="button" id="print">Generate PDF</button>
+    </a>
+  </body>
+</html>
