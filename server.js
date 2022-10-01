@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import user_router from "./routes/Data";
 
 // SEREVR PORT
-const Port = 5000;
+const Port = process.env.PORT || 5000;
 // DataBAse URL
 const Mongo_URI =
   "mongodb+srv://admin:XctGvPKYMqz8Ox7x@pup_ejs.2fis80u.mongodb.net/Pup-Ejs?retryWrites=true&w=majority";
