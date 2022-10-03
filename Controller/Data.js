@@ -208,20 +208,9 @@ export default class DataController {
     if (existsSync("./User-PDFs/User_archive.zip"))
       unlinkSync("./User-PDFs/User_archive.zip");
 
-    const db = await Data.find();
-
-    const files = readdirSync(dir + "/");
-
-    // if (db.length === files.length) {
     execSync(`zip -r User_archive *`, {
       cwd: dir,
     });
     return res.download("./User-PDFs/User_archive.zip");
-    // } else
-    //   return res.render("user", {
-    //     message:
-    //       ` ${files.length} of ${db.length} PDfs Present !!` +
-    //       ", hence Generate ALL PDFs First \n",
-    //   });
   }
 }
