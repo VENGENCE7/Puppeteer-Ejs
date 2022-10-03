@@ -1,9 +1,15 @@
 import Data from "../Models/Data";
 import Sequence from "../Models/Sequence";
 import Puppeteer from "puppeteer";
-import path from "path";
 import ejs from "ejs";
-import { existsSync, mkdirSync, readFileSync } from "fs";
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  unlinkSync,
+} from "fs";
+import { execSync } from "child_process";
 
 export default class DataController {
   // @desc Find All Users
@@ -12,6 +18,7 @@ export default class DataController {
 
   async FindAll(req, res, next) {
     let result;
+
     try {
       result = await Data.find();
     } catch (e) {
@@ -42,7 +49,7 @@ export default class DataController {
 
     if (existing_number) {
       return res.render("form", {
-        message: "Data entry failed ,Number allready exist",
+        message: "Data entry failed ,Phone-Number allready exist",
       });
     }
 
@@ -129,6 +136,8 @@ export default class DataController {
 
   async pdf(req, res, next) {
     let result;
+    const dir = "./User-PDFs";
+
     try {
       result = await Data.find();
     } catch (e) {
@@ -139,19 +148,29 @@ export default class DataController {
       return res.render("user", { message: "NO DATA FOUND" });
     }
 
+    if (existsSync("./User-PDFs/User_archive.zip"))
+      unlinkSync("./User-PDFs/User_archive.zip");
+
+    if (!existsSync(dir)) {
+      mkdirSync(dir, { recursive: true });
+    }
+
+    const files = readdirSync(dir + "/");
+
+    if (result.length === files.length) {
+      return res.render("user", {
+        message: "PDFs Created and Ready to be Downloaded",
+      });
+    }
+
     if (result.length > 0) {
       result.forEach(async function (obj, ind) {
         try {
-          console.log("PDF");
+          if (ind <= files.length - 1) return;
           const browser = await Puppeteer.launch();
           const page = await browser.newPage();
 
-          const printTemplate = path.join(process.cwd(), "/views/print.ejs");
-
-          const dir = path.join(process.cwd(), "User-PDFs");
-          if (!existsSync(dir)) {
-            mkdirSync(dir, { recursive: true });
-          }
+          const printTemplate = "./views/print.ejs";
 
           const htmlString = readFileSync(printTemplate, "utf8").toString();
 
@@ -164,14 +183,45 @@ export default class DataController {
             format: "A4",
             printBackground: true,
           });
-
-          console.log("done creating PDF");
+          await browser.close();
         } catch (e) {
           console.log("ERROR :", e);
         }
       });
-      return res.render("user", { message: "PDF CREATION DONE" });
+
+      return res.render("user", {
+        message: " PDFs Generated and Ready to be Downloaded",
+      });
     }
   }
-}
 
+  // @desc download
+  // @route POST /user/download
+  // @access public
+
+  async download(req, res, next) {
+    const dir = "./User-PDFs";
+
+    if (!existsSync(dir))
+      return res.render("user", { message: "Generate PDFs first" });
+
+    if (existsSync("./User-PDFs/User_archive.zip"))
+      unlinkSync("./User-PDFs/User_archive.zip");
+
+    const db = await Data.find();
+
+    const files = readdirSync(dir + "/");
+
+    if (db.length === files.length) {
+      execSync(`zip -r User_archive *`, {
+        cwd: dir,
+      });
+      return res.download("./User-PDFs/User_archive.zip");
+    } else
+      return res.render("user", {
+        message:
+          ` ${files.length} of ${db.length} PDfs Present !!` +
+          ", hence Generate ALL PDFs First \n",
+      });
+  }
+}

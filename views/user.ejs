@@ -71,7 +71,6 @@
         margin-left: 40%;
         font-size: 140%;
       }
-
       #myButton {
         margin-left: 47%;
         font-size: 90%;
@@ -86,6 +85,16 @@
         font-weight: 700;
         padding: 0.5%;
         color: cadetblue;
+        border-radius: 0.5em;
+      }
+      #download {
+        margin-top: 2em;
+        margin-bottom: 2em;
+        margin-left: 46.5%;
+        font-size: 80%;
+        font-weight: 700;
+        padding: 0.5%;
+        color: royalblue;
         border-radius: 0.5em;
       }
       table {
@@ -138,8 +147,13 @@
       </tbody>
     </table>
     <% } %>
-    <a href="/user/pdf">
-      <button type="button" id="print">Generate PDF</button>
-    </a>
+    <p>
+      <a href="/user/pdf">
+        <button type="button" id="print">Generate PDF</button>
+      </a>
+      <a href="/user/download">
+        <button type="button" id="download">Download</button>
+      </a>
+    </p>
   </body>
 </html>

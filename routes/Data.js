@@ -13,4 +13,6 @@ user_router.post("/find", data_controller.FindUser);
 
 user_router.get("/pdf", data_controller.pdf);
 
+user_router.get("/download", data_controller.download);
+
 export default user_router;
